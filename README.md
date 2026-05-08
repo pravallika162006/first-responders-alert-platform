@@ -71,3 +71,46 @@ FIRST-RESPONDERS-ALERT-PLATFORM
 │   ├── routes
 │   ├── models
 │   └── middleware
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/your-username/first-responders-alert-platform.git
+```
+
+### 2️⃣ Install Frontend Dependencies
+
+```bash
+cd client
+npm install
+```
+
+### 3️⃣ Install Backend Dependencies
+
+```bash
+cd server
+npm install
+```
+
+### 4️⃣ Configure Environment Variables
+
+Create a `.env` file inside the `server` folder and add:
+
+```env
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+```
+
+### 5️⃣ Run Frontend
+
+```bash
+npm run dev
+```
+
+### 6️⃣ Run Backend
+
+```bash
+node server.js
+```
