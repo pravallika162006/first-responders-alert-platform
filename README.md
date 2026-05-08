@@ -71,7 +71,7 @@ FIRST-RESPONDERS-ALERT-PLATFORM
 │   ├── routes
 │   ├── models
 │   └── middleware
-
+```
 ## ⚙️ Installation & Setup
 
 ### 1️⃣ Clone Repository
