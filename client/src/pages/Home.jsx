@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -16,11 +17,11 @@ function Home() {
           Instant emergency alert system connecting people with responders in real time.
         </p>
 
-        <a href="/emergency">
-  <button className="bg-red-600 hover:bg-red-700 px-8 py-4 rounded-xl text-xl font-semibold transition">
-    Send Emergency Alert
-  </button>
-</a>
+        <Link to="/emergency">
+          <button className="bg-red-600 hover:bg-red-700 px-8 py-4 rounded-xl text-xl font-semibold transition">
+            Send Emergency Alert
+          </button>
+        </Link>
 
       </div>
     </div>
