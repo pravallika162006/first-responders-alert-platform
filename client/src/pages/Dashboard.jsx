@@ -49,7 +49,7 @@ function Dashboard() {
     try {
 
       const res = await axios.get(
-        "http://localhost:5000/api/requests"
+        "https://first-responders-alert-platform.onrender.com/api/requests"
       );
 
       if (
@@ -104,7 +104,7 @@ function Dashboard() {
       }
 
       await axios.put(
-        `http://localhost:5000/api/requests/${id}`,
+        `https://first-responders-alert-platform.onrender.com/api/requests/${id}`,
         {
           status: updatedStatus,
         }
