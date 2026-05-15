@@ -8,6 +8,12 @@ import {
   Cell,
   Tooltip,
   ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
 } from "recharts";
 
 import {
@@ -234,6 +240,20 @@ function Dashboard() {
     r.emergencyType.toLowerCase().includes("accident")
   ).length;
 
+  // Accident kinds (group by emergencyType for entries mentioning "accident")
+  const accidentKindsMap = {};
+  requests
+    .filter((r) => r.emergencyType.toLowerCase().includes("accident"))
+    .forEach((r) => {
+      const key = r.emergencyType || "Accident";
+      accidentKindsMap[key] = (accidentKindsMap[key] || 0) + 1;
+    });
+
+  const accidentKindsData =
+    Object.keys(accidentKindsMap).length > 0
+      ? Object.keys(accidentKindsMap).map((k) => ({ name: k, value: accidentKindsMap[k] }))
+      : [{ name: "No accidents", value: 0 }];
+
   return (
 
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-red-950 text-white">
@@ -427,7 +447,7 @@ function Dashboard() {
 
         </div>
 
-        {/* Analytics */}
+        {/* Analytics: Pie + Bar side-by-side */}
 
         <div className="bg-gray-900 p-6 rounded-2xl border border-gray-800 mb-10">
 
@@ -435,35 +455,32 @@ function Dashboard() {
             Emergency Analytics 📊
           </h2>
 
-          <div className="h-80">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-80">
 
-            <ResponsiveContainer width="100%" height="100%">
-
-              <PieChart>
-
-                <Pie
-                  data={chartData}
-                  dataKey="value"
-                  outerRadius={120}
-                  label
-                >
-
+            <div className="w-full h-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie data={chartData} dataKey="value" outerRadius={80} label />
                   {chartData.map((entry, index) => (
-
-                    <Cell
-                      key={index}
-                      fill={COLORS[index]}
-                    />
-
+                    <Cell key={index} fill={COLORS[index]} />
                   ))}
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
 
-                </Pie>
-
-                <Tooltip />
-
-              </PieChart>
-
-            </ResponsiveContainer>
+            <div className="w-full h-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={accidentKindsData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#111827" />
+                  <XAxis dataKey="name" tick={{ fill: '#cbd5e1', fontSize: 12 }} />
+                  <YAxis tick={{ fill: '#cbd5e1' }} />
+                  <Tooltip />
+                  <Legend formatter={(value) => <span style={{ color: '#f8fafc' }}>{value}</span>} />
+                  <Bar dataKey="value" fill="#f97316" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
 
           </div>
 

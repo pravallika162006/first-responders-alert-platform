@@ -90,104 +90,118 @@ function EmergencyForm() {
 
       <Navbar />
 
-      <div className="flex justify-center items-center py-20 px-4">
+      <div className="max-w-7xl mx-auto px-4 py-12">
 
-        <div className="bg-gray-900 p-10 rounded-2xl w-full max-w-2xl shadow-lg">
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-red-500 text-center mb-8">
+          Send Emergency Alert 🚨
+        </h1>
 
-          <h1 className="text-4xl font-bold text-center text-red-500 mb-8">
-            Send Emergency Alert 🚨
-          </h1>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-6"
-          >
+          <div className="lg:col-span-2">
+            <div className="glass-card p-6 sm:p-10 rounded-2xl border border-white/10 shadow-2xl">
 
-            {/* Emergency Type */}
+              <p className="text-gray-300 mb-4">Quickly report an incident — responders nearby will be notified immediately.</p>
 
-            <select
-              className="bg-black border border-gray-700 p-4 rounded-lg"
-              value={emergencyType}
-              onChange={(e) =>
-                setEmergencyType(e.target.value)
-              }
-            >
+              <form onSubmit={handleSubmit} className="space-y-6">
 
-              <option value="">
-                Select Emergency Type
-              </option>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Emergency Type</label>
+                  <select
+                    required
+                    className="w-full rounded-2xl border border-white/10 bg-black/80 px-4 py-3 text-white outline-none focus:border-red-500"
+                    value={emergencyType}
+                    onChange={(e) => setEmergencyType(e.target.value)}
+                  >
+                    <option value="">Select Emergency Type</option>
+                    <option value="Road Accident">Road Accident</option>
+                    <option value="Medical Emergency">Medical Emergency</option>
+                    <option value="Fire Accident">Fire Accident</option>
+                    <option value="Flood Rescue">Flood Rescue</option>
+                    <option value="Crime Alert">Crime Alert</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
 
-              <option value="Road Accident">
-                Road Accident
-              </option>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
+                  <textarea
+                    required
+                    placeholder="Describe what happened, injuries, and any hazards"
+                    className="w-full rounded-2xl border border-white/10 bg-black/80 px-4 py-4 text-white outline-none h-36 resize-y focus:border-red-500"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
 
-              <option value="Medical Emergency">
-                Medical Emergency
-              </option>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Location</label>
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      placeholder="Enter location or use GPS"
+                      className="w-full rounded-2xl border border-white/10 bg-black/80 px-4 py-3 text-white outline-none focus:border-red-500"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={getCurrentLocation}
+                      className="rounded-2xl bg-red-600 px-4 py-3 text-white hover:bg-red-500 transition"
+                    >
+                      Use GPS
+                    </button>
+                  </div>
 
-              <option value="Fire Accident">
-                Fire Accident
-              </option>
+                  <div className="mt-2 text-xs text-gray-500">Latitude: {latitude || "—"} &nbsp; • &nbsp; Longitude: {longitude || "—"}</div>
+                </div>
 
-              <option value="Flood Rescue">
-                Flood Rescue
-              </option>
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={!emergencyType || !description || !location}
+                    className={`w-full rounded-2xl px-6 py-4 text-lg font-semibold text-white shadow-lg transition ${
+                      !emergencyType || !description || !location
+                        ? "bg-gray-700 cursor-not-allowed"
+                        : "bg-red-600 hover:bg-red-500"
+                    }`}
+                  >
+                    Send Alert
+                  </button>
+                </div>
 
-              <option value="Crime Alert">
-                Crime Alert
-              </option>
+              </form>
 
-              <option value="Other">
-                Other
-              </option>
-
-            </select>
-
-            {/* Description */}
-
-            <textarea
-              placeholder="Describe the emergency"
-              className="bg-black border border-gray-700 p-4 rounded-lg h-40"
-              value={description}
-              onChange={(e) =>
-                setDescription(e.target.value)
-              }
-            />
-
-            {/* Location */}
-
-            <div className="flex gap-3">
-
-              <input
-                type="text"
-                placeholder="Enter location"
-                className="bg-black border border-gray-700 p-4 rounded-lg w-full"
-                value={location}
-                onChange={(e) =>
-                  setLocation(e.target.value)
-                }
-              />
-
-              <button
-                type="button"
-                onClick={getCurrentLocation}
-                className="bg-blue-600 hover:bg-blue-700 px-5 rounded-lg"
-              >
-                📍
-              </button>
+              <div className="mt-6 text-sm text-gray-400">
+                Tip: Provide specific landmarks and number of injured people for faster response.
+              </div>
 
             </div>
+          </div>
 
-            {/* Submit Button */}
+          <aside className="space-y-6">
+            <div className="glass-card p-6 rounded-2xl border border-white/10 shadow-2xl bg-white/3">
+              <h3 className="text-lg font-bold text-red-400">Quick Actions</h3>
+              <p className="text-sm text-gray-300 mt-2">Useful contacts and safety steps while waiting for responders.</p>
 
-            <button
-              type="submit"
-              className="bg-red-600 hover:bg-red-700 p-4 rounded-xl text-xl font-semibold"
-            >
-              Send Alert
-            </button>
+              <div className="mt-4 grid gap-3">
+                <a href="tel:102" className="block rounded-xl bg-red-600 px-4 py-3 text-center font-semibold text-white">Call Emergency Services</a>
+                <a href="tel:100" className="block rounded-xl bg-blue-700 px-4 py-3 text-center font-semibold text-white">Local Police</a>
+                <a href="tel:101" className="block rounded-xl bg-orange-600 px-4 py-3 text-center font-semibold text-white">Fire Department</a>
+              </div>
+            </div>
 
-          </form>
+            <div className="glass-card p-6 rounded-2xl border border-white/10 shadow-2xl">
+              <h3 className="text-lg font-bold text-white">Safety Checklist</h3>
+              <ul className="mt-3 text-gray-300 space-y-2 text-sm">
+                <li>• Move to a safe spot if possible</li>
+                <li>• Render first aid only if trained</li>
+                <li>• Keep phone charged and visible</li>
+                <li>• Stay on the line with dispatcher</li>
+              </ul>
+            </div>
+          </aside>
 
         </div>
 
